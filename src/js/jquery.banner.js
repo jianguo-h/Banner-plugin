@@ -1041,6 +1041,6 @@
 		direction: "horizontal",  			// 运动的方向vertical, 默认horizontal
 		paginationClickable: true,			// 分页是否响应点击事件
 		paginationClass: "",				// 分页的样式
-		paginationActiveClass: ""			// 当前分页的样式
+		paginationActiveClass: ""			// 选中分页的样式
 	}
 })(jQuery);
