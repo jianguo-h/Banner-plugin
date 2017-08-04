@@ -1,33 +1,14 @@
-/* reset */
-html {
-	outline: none;
-	-webkit-tap-highlight-color: transparent;  /* 去除点击时的高亮边框 */
-	-webkit-overflow-scrolling: touch;         /* 增加弹性滚动效果 */
-	-webkit-text-size-adjust: none;           /* 防止转屏时文字大小变化 */
-	-webkit-touch-callout: none;    		   /* 禁止 iOS 弹出各种操作窗口 */
-	-webkit-user-select: none;     		   /* 禁止用户选择文字 */
-}
-body {
-	font-weight: normal;
-	font-style: normal;
-}
-html, body, div, span, a, p, dl, dt, dd, strong, ol, ul, li,
-i, em, label, img, h1, h2, h3, h4, h5, h6 {
-	padding: 0;
+html, body, div, span, ul, ol, li {
 	margin: 0;
-	font-style: normal;
-	font-weight: normal;
-	border: none;
-	outline: none;
-	-webkit-tap-highlight-color: transparent;
+	padding: 0;
 }
 ol, ul, li {
   list-style: none;
 }
 
+/* start */
 .banner {
-	 margin-left: auto;
-	margin-right: auto; 
+	margin: 0 auto;
 	position: relative;
 	overflow: hidden;
 }
@@ -68,12 +49,12 @@ ol, ul, li {
 }
 .banner-prev-arrow {
 	left: 0;
-	background: url(../../images/arrow-left.png) center center no-repeat;
+	background: url(../images/arrow-left.png) center center no-repeat;
 	background-size: 50%;
 }
 .banner-next-arrow {
 	right: 0;
-	background: url(../../images/arrow-right.png) center center no-repeat;
+	background: url(../images/arrow-right.png) center center no-repeat;
 	background-size: 50%;
 }
 // 竖屏
