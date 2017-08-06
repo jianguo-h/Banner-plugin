@@ -1,11 +1,16 @@
-import "../less/banner.less";
-Array.prototype.indexOf = function(prop) {
-	for(let [index, value] of this.entries()) {
-		if(prop === value) {
-			return index;
+Array.prototype.includes = function(value) {
+	for(let val of this) {
+		if(val.toString() === value.toString()) {
+			return true;
 		}
 	}
-	return -1;
+	return false;
+}
+String.prototype.includes = function(str) {
+	if(this.indexOf(str) !== -1) {
+		return true;
+	}
+	return false;
 }
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/g, ''); 
@@ -20,7 +25,7 @@ export default class Banner {
 			interval: 3000,						// 间隔时间
 			itemSpacing: 0,						// item之间的间距
 			keyboard: true,						// 是否响应键盘事件
-			autoplay: false,					// 是否自动播放
+			autoplay: true,						// 是否自动播放
 			pagination: true,					// 是否显示分页
 			mousewheel: true,					// 是否响应鼠标滚轮事件
 			animation: "slide",       			// 动画效果cube, fade, 默认slide
@@ -475,16 +480,12 @@ export default class Banner {
 	// 渐变
 	gradient(curIndex) {
 		const itemsLen = this.getItemsLength();
+		curIndex = this.loop === true ? curIndex + 1 : curIndex;
 
 		for(let i = 0; i < itemsLen; i++) {
 			this.css(this.items[i], "opacity", "0");
 		}
-		if(this.loop) {
-			this.css(this.items[curIndex + 1], "opacity", "1");
-		}
-		else {
-			this.css(this.items[curIndex], "opacity", "1");
-		}
+		this.css(this.items[curIndex], "opacity", "1");
 	}
 	// 滑动(向下兼容)
 	changePos(curIndex) {
@@ -862,7 +863,7 @@ export default class Banner {
 		this.on(this.bannerWrapper, "mouseover", () => {
 			this.timer && clearInterval(this.timer);
 		}).on(this.bannerWrapper, "mouseout", () => {
-			this.autoplay();
+			this.timer && this.autoplay();
 		});
 		
 	}
@@ -909,22 +910,20 @@ export default class Banner {
 		const ua = navigator.userAgent.toLowerCase();
 
 		if(window.ActiveXObject) {
-			if(ua.indexOf("compatible") > -1) {
+			if(ua.includes("compatible")) {
 				return parseInt(ua.match(/msie ([\d.]+)/)[1]);
 			}
 		}
-		else if(ua.indexOf("trident") > -1) {
+		else if(ua.includes("trident")) {
 			return "edge";
 		}
-		else {
-			return;
-		}
+		return undefined;
 	}
 	// 处理 animation 的情况
 	getAnimation() {
 		let animation = (typeof this.opts.animation === "string") ? this.opts.animation : "slide";
 
-		if(["slide", "fade", "cube"].indexOf(animation) === -1) {
+		if(["slide", "fade", "cube"].includes(animation)) {
 			animation = "slide";
 		}
 		else if(!this.isFlex && animation === "cube") {
@@ -946,17 +945,12 @@ export default class Banner {
 	judgePlatform() {
 		const userAgent = navigator.userAgent.toLowerCase();
 	   	const agents = ["android", "iphone", "symbianos", "windows phone", "ipad", "ipod"];
-	    let platform = "";
-	    for (let i = 0; i < agents.length; i++) {
-	        if (userAgent.indexOf(agents[i]) > 0) {
-	            platform = "mobile";
-	            break;
-	        }
-	        else {
-	        	platform = "pc";
-	        }
+	    for(let agent of agents) {
+	    	if(userAgent.includes(agent)) {
+	    		return "mobile";
+	    	}
 	    }
-	    return platform;
+	    return "pc";
 	}
 	// 获得item的数量
 	getItemsLength() {
@@ -970,15 +964,15 @@ export default class Banner {
 	on(ele, eventType, callback) {   
 		const eventList = eventType.split(" ");
 
-		if(callback && typeof callback === "function") {
-			for(let i = 0; i < eventList.length; i++) {
+		if(typeof callback === "function") {
+			for(let event of eventList) {
 				if(document.addEventListener) {
-					ele.addEventListener(eventList[i], callback, false);
+					ele.addEventListener(event, callback);
 				}
-				else if(document.attachEvent) {
-					ele.attachEvent("on" + eventList[i], callback);
+				else {
+					ele.attachEvent(`on${event}`, callback);
 				}
-			}	
+			}
 		}
 		return this;
 	}
@@ -1005,7 +999,7 @@ export default class Banner {
 		return this;
 	}
 	// 根据type处理节点的class
-	dealClass(ele, classStrs, type) {
+	/*dealClass(ele, classStrs, type) {
 		classStrs = (typeof classStrs === "string") ? classStrs : "";
 		if(classStrs === "") return;
 
@@ -1019,22 +1013,44 @@ export default class Banner {
 			}
 		}
 		return this;
+	}*/
+	dealClass(ele, classStrs, type) {
+		classStrs = (typeof classStrs === "string") ? classStrs : "";
+		if(classStrs === "") return;
+
+		let eleClass = ele.className;
+		const classList = classStrs.split(" ");
+		for(let className of classList) {
+			if(type === "addClass") {
+				if(!eleClass.includes(className)) {
+					eleClass += " " + className;
+				}
+			}
+			else {
+				if(eleClass.includes(className)) {
+					let reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+					eleClass = eleClass.replace(reg, "");
+				}
+			}
+		}
+		ele.className = eleClass;
+		return this;
 	}
 	// 返回适合当前浏览器版本的css属性，否则返回false
 	prefix(prop) {
-		let style = this.createDom("dummy").style;
-	    let prefixes = ["webkit", "moz", "o", "ms"];
+		const style = this.createDom("dummy").style;
+	    const prefixes = ["webkit", "moz", "o", "ms"];
 	    let prefixeProp = "";
 
 	    if(style[prop] !== undefined) return prop;
-
+	    
 		prop = prop.charAt(0).toUpperCase() + prop.substr(1);
-    	for(let key in prefixes) {
-    		prefixeProp = prefixes[key].toString().toLowerCase() + prop;
+		for(let prefix of prefixes) {
+			prefixeProp = prefix + prop;
 			if(style[prefixeProp] !== undefined) {
     			return prefixeProp;
     		}
-    	}
+		}
 		return false;		    	
 	}
 }
