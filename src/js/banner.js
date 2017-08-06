@@ -919,7 +919,7 @@ export default class Banner {
 	getAnimation() {
 		let animation = (typeof this.opts.animation === "string") ? this.opts.animation : "slide";
 
-		if(["slide", "fade", "cube"].includes(animation)) {
+		if(!["slide", "fade", "cube"].includes(animation)) {
 			animation = "slide";
 		}
 		else if(!this.isFlex && animation === "cube") {
@@ -995,21 +995,6 @@ export default class Banner {
 		return this;
 	}
 	// 根据type处理节点的class
-	/*dealClass(ele, classStrs, type) {
-		classStrs = (typeof classStrs === "string") ? classStrs : "";
-		if(classStrs === "") return;
-
-		const classArr = classStrs.split(" ");
-		for(let className of classArr) {
-			if(type === "addClass") {
-				ele.classList.add(className);
-			}
-			else {
-				ele.classList.remove(className);
-			}
-		}
-		return this;
-	}*/
 	dealClass(ele, classStrs, type) {
 		classStrs = (typeof classStrs === "string") ? classStrs : "";
 		if(classStrs === "") return;
