@@ -12,51 +12,51 @@ ol, ul, li {
 	margin-right: auto;
 	position: relative;
 	overflow: hidden;
-}
-.banner-wrapper {
- 	width: 100%;
-	display: flex;
-	transition-property: all;
-	position: relative;
-} 
-.banner-item {
-	width: 100%;
-	flex-shrink: 0; 
-	position: relative;
-}
-.banner-pagination {
-	position: absolute;
-	text-align: center;
-	font-size: 0;
-}
-.banner-pagination-bullet {
-	width: 8px;
-	height: 8px;
-	margin: 0 5px;
-	display: inline-block;
-	background-color: #fff;
-	border-radius: 100%;
-	cursor: pointer;
-}
-.banner-pagination-bullet-active {
-	background-color: #333;
-}
-.banner-prev-arrow, .banner-next-arrow {
-	width: 15%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	cursor: pointer;
-}
-.banner-prev-arrow {
-	left: 0;
-	background: url(../images/arrow-left.png) center center no-repeat;
-	background-size: 50%;
-}
-.banner-next-arrow {
-	right: 0;
-	background: url(../images/arrow-right.png) center center no-repeat;
-	background-size: 50%;
+	.banner-wrapper {
+	 	width: 100%;
+		display: flex;
+		transition-property: all;
+		position: relative;
+		.banner-item {
+			width: 100%;
+			flex-shrink: 0; 
+			position: relative;
+		}
+	} 
+	.banner-pagination {
+		position: absolute;
+		text-align: center;
+		font-size: 0;
+		.banner-pagination-bullet {
+			width: 8px;
+			height: 8px;
+			margin: 0 5px;
+			display: inline-block;
+			background-color: #fff;
+			border-radius: 100%;
+			cursor: pointer;
+		}
+		.banner-pagination-bullet-active {
+			background-color: #333;
+		}
+	}
+	.banner-prev-arrow, .banner-next-arrow {
+		width: 15%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		cursor: pointer;
+	}
+	.banner-prev-arrow {
+		left: 0;
+		background: url(../images/arrow-left.png) center center no-repeat;
+		background-size: 50%;
+	}
+	.banner-next-arrow {
+		right: 0;
+		background: url(../images/arrow-right.png) center center no-repeat;
+		background-size: 50%;
+	}
 }
 // 竖屏
 .banner-vertical {
