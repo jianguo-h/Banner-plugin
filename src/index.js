@@ -9,7 +9,8 @@ if(module.hot) {
 // default
 const defaults = new Banner(".default", {
 	autoplay: false,
-	mousewheel: false
+	mousewheel: false,
+	itemSpacing: 30
 });
 // fade-banner
 /*const fade = new Banner(".fade-banner", {

@@ -7,10 +7,7 @@ Array.prototype.includes = function(value) {
 	return false;
 }
 String.prototype.includes = function(str) {
-	if(this.indexOf(str) !== -1) {
-		return true;
-	}
-	return false;
+	return this.indexOf(str) !== -1 ? true : false;
 }
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/g, ''); 
@@ -242,10 +239,7 @@ export default class Banner {
 			!this.loop && this.css(this.bannerWrapper, "left", 0);
 			for(let i = 0; i < itemsLen; i++) {
 				let left = (i === 0 ) ? this.itemSize * i : (this.itemSize + this.itemSpacing) * i;
-				this.css(this.items[i], {
-					"position": "absolute",
-					"left": `${left}px`
-				});
+				this.css(this.items[i], "left", `${left}px`);
 			}
 		}
 		else {
@@ -504,7 +498,7 @@ export default class Banner {
 			return;
 		}
 		if(offsetLeft === 0) return;
-		let go = (() => {
+		let go = () => {
 			this.animated = true;
 			curPos = isHorizontal ? parseInt(bannerWrapper.style.left) : parseInt(bannerWrapper.style.top);
 			if((translateSpeed < 0 && curPos > endPos) || (translateSpeed > 0 && curPos < endPos)) {
@@ -515,7 +509,8 @@ export default class Banner {
 			else {
 				this.changePosEnd();
 			}
-		})();
+		};
+		go();
 	}
 	// 渐变(向下兼容)
 	changeOpacity(curIndex) {
@@ -538,7 +533,7 @@ export default class Banner {
 			return;
 		}
 		if(offsetOpacity === 0) return;
-		let goOpacity = (() => {
+		let goOpacity = () => {
 			this.animated = true;
 			curOpacity = this.ieVersion <= 8 ? Number(items[curIndex].style.filter.replace(/[^0-9]/ig, "")) : Number(items[curIndex].style.opacity);
 			if(curOpacity < endOpacity) {
@@ -549,7 +544,8 @@ export default class Banner {
 			else {
 				this.changeOpacityEnd();
 			}
-		})();
+		};
+		goOpacity();
 	}
 	// 移动结束后处理
 	translateEnd() {

@@ -8,11 +8,12 @@ ol, ul, li {
 
 /* start */
 .banner {
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
 	overflow: hidden;
 }
- .banner-wrapper {
+.banner-wrapper {
  	width: 100%;
 	display: flex;
 	transition-property: all;
@@ -97,8 +98,9 @@ ol, ul, li {
 	.banner-wrapper {
 		width: 100%;
 		position: absolute;
+	    .banner-item {
+	    	position: absolute;
+	        float: left;
+	    }
 	}
-    .banner-item {
-        float: left;
-    }
 }
