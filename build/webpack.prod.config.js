@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const webpackMerge = require("webpack-merge");
-const copyWebpackPlugin = require("copy-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 const webpackBaseConfig = require("./webpack.base.config");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
@@ -32,7 +32,6 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     new ExtractTextPlugin({
       filename: "css/banner.min.css"
     }),
-    
     // 压缩混淆js
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -45,15 +44,15 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
       cssProcessor: require("cssnano"),
-      cssProcessorOptions: { 
+      cssProcessorOptions: {
         discardComments: {
-          removeAll: true 
-        } 
+          removeAll: true
+        }
       },
       canPrint: true
     }),
     // 拷贝静态文件
-    new copyWebpackPlugin([{
+    new CopyWebpackPlugin([{
       from: path.resolve(__dirname, "../static"),
       to: path.resolve(__dirname, "../dist/static"),
       ignore: ['.*']

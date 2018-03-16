@@ -6,7 +6,7 @@ webpack(webpackProdConfig, (err, stats) => {
     throw err;
   }
   console.log('  Build complete.\n');
-    console.log('  Tip: built files are meant to be served over an HTTP server.\n' + 
-      '  Opening index.html over file:// won\'t work.\n'
-    );
+  console.log('  Tip: built files are meant to be served over an HTTP server.\n' +
+    '  Opening index.html over file:// won\'t work.\n'
+  );
 })

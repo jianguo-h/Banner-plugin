@@ -16,7 +16,7 @@ module.exports = {
         test: /\.js$/,
         exclude: [
           path.resolve(__dirname, '../dist'),
-          path.resolve(__dirname, '../node_modules'),
+          path.resolve(__dirname, '../node_modules')
         ],
         use: ['eslint-loader']
       },
@@ -48,6 +48,6 @@ module.exports = {
       template: "./index.html",
       filename: "index.html",
       inject: true
-    }),
+    })
   ]
 }

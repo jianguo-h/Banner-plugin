@@ -6,7 +6,7 @@ const webpackDevConfig = webpackMerge(webpackBaseConfig, {
   devtool: "#cheap-module-eval-source-map",
   mode: 'development',
   output: {
-    publicPath: '/',
+    publicPath: '/'
   },
   module: {
     rules: [
