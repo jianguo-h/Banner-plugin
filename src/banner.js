@@ -1,19 +1,8 @@
 import './banner.less';
-/* Array.prototype.includes = function(value) {
-  for(let val of this) {
-    if(val.toString() === value.toString()) {
-      return true;
-    }
-  }
-  return false;
-}
-String.prototype.includes = function(str) {
-  return this.indexOf(str) !== -1 ? true : false;
-}
-String.prototype.trim = function() {
+/*String.prototype.trim = function() {
   return this.replace(/^\s+|\s+$/g, '');
 } */
-export default class Banner {
+class Banner {
   constructor(ele, opts) {
     this.defaults = {
       loop: true,                               // 是否循环播放
@@ -34,6 +23,9 @@ export default class Banner {
     }
     this.opts = Object.assign({}, this.defaults, opts);
     this.ele = document.querySelector(ele);
+    if(!this.ele) {
+      throw new Error('can not find ele: ' + this.ele);
+    }
     this.init();
   }
   // 初始化
@@ -56,7 +48,7 @@ export default class Banner {
     this.animation = this.getAnimation();       // 获得运动的效果
     this.bannerWrapper = this.ele.querySelector(".banner-wrapper");
     this.items = this.bannerWrapper.querySelectorAll(".banner-item");
-    this.isHorizontal = this.opts.direction === "vertical";
+    this.isHorizontal = this.opts.direction !== "vertical";
     this.eventType = (this.judgePlatform() === "pc") ? "click" : "touchstart";
     this.curIndex = (startIndex > 0 && startIndex < this.getItemsLength()) ? startIndex : 0;
     this.itemSize = this.isHorizontal ? this.items[0].offsetWidth : this.items[0].offsetHeight;
@@ -1034,3 +1026,9 @@ export default class Banner {
     return false;
   }
 }
+
+if(typeof window !== 'undefined') {
+  window['Banner'] = Banner;
+}
+
+export default Banner;
