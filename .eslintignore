@@ -1,2 +1,4 @@
-config/*.js
-dist/*
+build
+dist
+node_modules
+postcss.config.js
