@@ -11,26 +11,26 @@ String.prototype.includes = function(str) {
   return this.indexOf(str) !== -1 ? true : false;
 }
 String.prototype.trim = function() {
-  return this.replace(/^\s+|\s+$/g, ''); 
+  return this.replace(/^\s+|\s+$/g, '');
 } */
 export default class Banner {
   constructor(ele, opts) {
     this.defaults = {
-      loop: true,							// 是否循环播放
-      speed: 500,							// 运动的速度
-      arrow: false,						// 是否显示前进后退按钮
-      startIndex: 0,						// 起始的item
-      interval: 3000,						// 间隔时间
-      itemSpacing: 0,						// item之间的间距
-      keyboard: true,						// 是否响应键盘事件
-      autoplay: true,						// 是否自动播放
-      pagination: true,					// 是否显示分页
-      mousewheel: true,					// 是否响应鼠标滚轮事件
-      animation: "slide",       			// 动画效果cube, fade, 默认slide
-      direction: "horizontal",  			// 运动的方向vertical, 默认horizontal
-      paginationClickable: true,			// 分页是否响应点击事件
-      paginationClass: "",				// 分页的样式
-      paginationActiveClass: ""			// 当前分页的样式
+      loop: true,                               // 是否循环播放
+      speed: 500,                               // 运动的速度
+      arrow: false,                             // 是否显示前进后退按钮
+      startIndex: 0,                            // 起始的item
+      interval: 3000,                           // 间隔时间
+      itemSpacing: 0,                           // item之间的间距
+      keyboard: true,                           // 是否响应键盘事件
+      autoplay: true,                           // 是否自动播放
+      pagination: true,                         // 是否显示分页
+      mousewheel: true,                         // 是否响应鼠标滚轮事件
+      animation: "slide",                       // 动画效果cube, fade, 默认slide
+      direction: "horizontal",                  // 运动的方向vertical, 默认horizontal
+      paginationClickable: true,                // 分页是否响应点击事件
+      paginationClass: "",                      // 分页的样式
+      paginationActiveClass: ""                 // 当前分页的样式
     }
     this.opts = Object.assign({}, this.defaults, opts);
     this.ele = document.querySelector(ele);
@@ -38,25 +38,25 @@ export default class Banner {
   }
   // 初始化
   init() {
-    let loop = (typeof this.opts.loop === "boolean") ? this.opts.loop : true;
-    let arrow = (typeof this.opts.arrow === "boolean") ? this.opts.arrow : true;
-    let autoplay = (typeof this.opts.autoplay === "boolean") ? this.opts.autoplay : true;
-    let pagination = (typeof this.opts.pagination === "boolean") ? this.opts.pagination : true;
-    let startIndex = (typeof this.opts.startIndex === "number") ? parseInt(this.opts.startIndex) : 0;
-    let speed = (typeof this.opts.speed === "number" && this.opts.speed > 0) ? parseInt(this.opts.speed) : 500;
-    let itemSpacing = (typeof this.opts.itemSpacing === "number" && this.opts.itemSpacing > 0) ? parseInt(this.opts.itemSpacing) : 0;
+    const loop = (typeof this.opts.loop === "boolean") ? this.opts.loop : true;
+    const arrow = (typeof this.opts.arrow === "boolean") ? this.opts.arrow : true;
+    const autoplay = (typeof this.opts.autoplay === "boolean") ? this.opts.autoplay : true;
+    const pagination = (typeof this.opts.pagination === "boolean") ? this.opts.pagination : true;
+    const startIndex = (typeof this.opts.startIndex === "number") ? parseInt(this.opts.startIndex) : 0;
+    const speed = (typeof this.opts.speed === "number" && this.opts.speed > 0) ? parseInt(this.opts.speed) : 500;
+    const itemSpacing = (typeof this.opts.itemSpacing === "number" && this.opts.itemSpacing > 0) ? parseInt(this.opts.itemSpacing) : 0;
 
     // init config opts
     this.loop = loop;
     this.speed = speed;
-    this.animated = false;								// 初始化运动状态
+    this.animated = false;                      // 初始化运动状态
     this.itemSpacing = itemSpacing;
-    this.ieVersion = this.getIeVersion();				// 获得ie的版本
-    this.isFlex = this.isSupportFlex();					// 是否支持 flex 属性
-    this.animation = this.getAnimation();				// 获得运动的效果
+    this.ieVersion = this.getIeVersion();       // 获得ie的版本
+    this.isFlex = this.isSupportFlex();         // 是否支持 flex 属性
+    this.animation = this.getAnimation();       // 获得运动的效果
     this.bannerWrapper = this.ele.querySelector(".banner-wrapper");
     this.items = this.bannerWrapper.querySelectorAll(".banner-item");
-    this.isHorizontal = this.opts.direction === "vertical" ? false : true;
+    this.isHorizontal = this.opts.direction === "vertical";
     this.eventType = (this.judgePlatform() === "pc") ? "click" : "touchstart";
     this.curIndex = (startIndex > 0 && startIndex < this.getItemsLength()) ? startIndex : 0;
     this.itemSize = this.isHorizontal ? this.items[0].offsetWidth : this.items[0].offsetHeight;
@@ -119,7 +119,7 @@ export default class Banner {
       if(this.isFlex) {
         this.css(this.bannerWrapper, "transitionDuration", "0ms");
         if(this.isHorizontal) {
-          this.css(this.bannerWrapper, "transform", `translate3d(-${(itemSize + itemSpacing) * curIndex}px, 0, 0)`);		
+          this.css(this.bannerWrapper, "transform", `translate3d(-${(itemSize + itemSpacing) * curIndex}px, 0, 0)`);
         }
         else {
           this.css(this.bannerWrapper, "transform", `translate3d(0, -${(itemSize + itemSpacing) * curIndex}px, 0)`);
@@ -127,7 +127,7 @@ export default class Banner {
       }
       else {
         if(this.isHorizontal) {
-          this.css(this.bannerWrapper, "left", `-${(itemSize + itemSpacing) * curIndex}px`);		
+          this.css(this.bannerWrapper, "left", `-${(itemSize + itemSpacing) * curIndex}px`);
         }
         else {
           this.css(this.bannerWrapper, "top", `-${(itemSize + itemSpacing) * curIndex}px`);
@@ -139,9 +139,9 @@ export default class Banner {
   setItemSpace(itemSpacing) {
     const itemsLen = this.getItemsLength();
 
-    for(let i = 0; i < itemsLen; i++) {	
+    for(let i = 0; i < itemsLen; i++) {
       if(this.isHorizontal) {
-        this.isFlex && this.css(this.items[i], "marginRight", `${itemSpacing}px`);	
+        this.isFlex && this.css(this.items[i], "marginRight", `${itemSpacing}px`);
       }
       else {
         this.css(this.items[i], "marginBottom", `${itemSpacing}px`);
@@ -157,12 +157,12 @@ export default class Banner {
   cube() {
     const { items, itemSize, isHorizontal, bannerWrapper } = this;
     const itemsLen = this.getItemsLength();
-    let rotateOffset = this.loop ? 90 : 0;
-    let curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
+    const rotateOffset = this.loop ? 90 : 0;
+    const curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
 
     for(let i = 0; i < itemsLen; i++) {
-      let rotateAngle = i * 90;
-      let round = Math.floor(i / 4);
+      const rotateAngle = i * 90;
+      const round = Math.floor(i / 4);
       if(isHorizontal) {
         if(i % 4 === 0) {
           this.css(items[i], "transform", `rotateY(${rotateAngle}deg) translate3d(${(-round * 4 * itemSize)}px, 0, 0)`);
@@ -203,7 +203,7 @@ export default class Banner {
   fade() {
     const items = this.items;
     const itemsLen = this.getItemsLength();
-    let curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
+    const curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
 
     for(let i = 0; i < itemsLen; i++) {
       if(this.isFlex) {
@@ -212,11 +212,11 @@ export default class Banner {
           "opacity": 0
         });
         (this.ieVersion <= 8) && this.css(items[i], "filter", "alpha(opacity=0)");
-        if(this.isHorizontal) {	
+        if(this.isHorizontal) {
           this.css(items[i], "transform", `translate3d(-${this.itemSize * i}px, 0, 0)`);
         }
         else {
-          this.css(items[i], "transform", `translate3d(0, -${this.itemSize * i}px, 0)`);	
+          this.css(items[i], "transform", `translate3d(0, -${this.itemSize * i}px, 0)`);
         }
       }
       else {
@@ -228,7 +228,7 @@ export default class Banner {
         (this.ieVersion <= 8) && this.css(items[i], "filter", "alpha(opacity=0)");
       }
     }
-    this.dealClass(this.ele, "banner-fade", "addClass").css(items[curIndex], "opacity", 1);	
+    this.dealClass(this.ele, "banner-fade", "addClass").css(items[curIndex], "opacity", 1);
     (this.ieVersion <= 8) && this.css(items[curIndex], "filter", "alpha(opacity=100)");
   }
   // 滑动效果
@@ -239,7 +239,7 @@ export default class Banner {
     if(this.isHorizontal) {
       !this.loop && this.css(this.bannerWrapper, "left", 0);
       for(let i = 0; i < itemsLen; i++) {
-        let left = (i === 0 ) ? this.itemSize * i : (this.itemSize + this.itemSpacing) * i;
+        const left = (i === 0) ? this.itemSize * i : (this.itemSize + this.itemSpacing) * i;
         this.css(this.items[i], "left", `${left}px`);
       }
     }
@@ -250,11 +250,11 @@ export default class Banner {
   // 绑定滑动事件
   swiperEvent() {
     let isMove = false;
-    let platform = this.judgePlatform();
-    let targetDom = this.bannerWrapper;
-    let startEvent = platform === "pc" ? "mousedown" : "touchstart";
-    let moveEvent = platform === "pc" ? "mousemove" : "touchmove";
-    let endEvent = platform === "pc" ? "mouseup" : "touchend";
+    const platform = this.judgePlatform();
+    const targetDom = this.bannerWrapper;
+    const startEvent = platform === "pc" ? "mousedown" : "touchstart";
+    const moveEvent = platform === "pc" ? "mousemove" : "touchmove";
+    const endEvent = platform === "pc" ? "mouseup" : "touchend";
 
     this.on(targetDom, startEvent, evt => {
       isMove = true;
@@ -271,10 +271,10 @@ export default class Banner {
   }
   // 判断滑动方向
   swiperDirection() {
-    let	angle = this.angle;
-    let	boundary = (this.offsetTime > 500) ? parseInt(this.itemSize / 2) : 50;
+    const angle = this.angle;
+    const boundary = (this.offsetTime > 500) ? parseInt(this.itemSize / 2) : 50;
 
-    let swiperHorizontal = boundary => {
+    const swiperHorizontal = boundary => {
       // left or ←
       if(this.offset >= boundary && (angle >= -45 && angle < 45)) {
         this.prev();
@@ -289,7 +289,7 @@ export default class Banner {
         }
       }
     }
-    let swiperVertical = boundary => {
+    const swiperVertical = boundary => {
       // top or ↑
       if(this.offset >= boundary && (angle >= 45 && angle < 135)) {
         this.prev();
@@ -317,7 +317,7 @@ export default class Banner {
       evt.stopPropagation();
       evt.preventDefault();
     }
-    else {		
+    else {
       evt.cancelBubble = true;
       evt.returnValue = false;
     }
@@ -334,9 +334,9 @@ export default class Banner {
   onTouchmove(evt) {
     evt = evt || window.event;
     const { itemSize, curIndex, itemSpacing, isHorizontal, bannerWrapper } = this;
-    let endX = evt.type === "touchmove" ? evt.targetTouches[0].pageX : (evt.pageX || evt.clientX);
-    let endY = evt.type === "touchmove" ? evt.targetTouches[0].pageY : (evt.pageY || evt.clientY);
-    let translateOffset = (this.loop === true) ? -(itemSize + itemSpacing) : 0;
+    const endX = evt.type === "touchmove" ? evt.targetTouches[0].pageX : (evt.pageX || evt.clientX);
+    const endY = evt.type === "touchmove" ? evt.targetTouches[0].pageY : (evt.pageY || evt.clientY);
+    const translateOffset = (this.loop === true) ? -(itemSize + itemSpacing) : 0;
 
     this.stopPrevent(evt);
     this.dx = endX - this.startX;
@@ -422,7 +422,7 @@ export default class Banner {
     }
   }
   // 动画结束后执行
-  transitionEnd() {		
+  transitionEnd() {
     if(this.animation === "cube") {
       this.rotateEnd();
     }
@@ -435,13 +435,13 @@ export default class Banner {
   }
   // 移动
   translate(curIndex) {
-    let translateOffset = this.loop ? (this.itemSize + this.itemSpacing) : 0;
-    let translateDistance = (this.itemSize + this.itemSpacing) * curIndex + translateOffset;
+    const translateOffset = this.loop ? (this.itemSize + this.itemSpacing) : 0;
+    const translateDistance = (this.itemSize + this.itemSpacing) * curIndex + translateOffset;
 
     if(this.isHorizontal) {
       this.css(this.bannerWrapper, "transform", `translate3d(-${translateDistance}px, 0, 0)`);
     }
-    else {	
+    else {
       this.css(this.bannerWrapper, "transform", `translate3d(0, -${translateDistance}px, 0)`);
     }
   }
@@ -450,7 +450,7 @@ export default class Banner {
     const items = this.items;
     const itemsLen = this.getItemsLength();
     const rotate = curIndex * 90;
-    let rotateOffset = this.loop ? 90 : 0;
+    const rotateOffset = this.loop ? 90 : 0;
 
     for(let i = 0; i < itemsLen; i++) {
       this.css(items[i], "visibility", "hidden");
@@ -484,14 +484,14 @@ export default class Banner {
   }
   // 滑动(向下兼容)
   changePos(curIndex) {
-    let interval = 10;
+    const interval = 10;
     const { isHorizontal, bannerWrapper } = this;
     curIndex = this.loop ? curIndex + 1 : curIndex;
     let curPos = isHorizontal ? parseInt(bannerWrapper.style.left) : parseInt(bannerWrapper.style.top);
-    let endPos = -1 * curIndex * (this.itemSize + this.itemSpacing);
-    let offsetLeft = endPos - curPos;
-    let translateSpeed = parseInt(offsetLeft / (this.speed / interval));
-    
+    const endPos = -1 * curIndex * (this.itemSize + this.itemSpacing);
+    const offsetLeft = endPos - curPos;
+    const translateSpeed = parseInt(offsetLeft / (this.speed / interval));
+
     if(this.isSetStart && this.curIndex !== 0) {
       this.isSetStart = false;
       isHorizontal && (this.css(bannerWrapper, "left", `${endPos} + px`));
@@ -499,14 +499,14 @@ export default class Banner {
       return;
     }
     if(offsetLeft === 0) return;
-    let go = () => {
+    const go = () => {
       this.animated = true;
       curPos = isHorizontal ? parseInt(bannerWrapper.style.left) : parseInt(bannerWrapper.style.top);
       if((translateSpeed < 0 && curPos > endPos) || (translateSpeed > 0 && curPos < endPos)) {
         isHorizontal && (this.css(bannerWrapper, "left", `${(curPos + translateSpeed)}px`));
         !isHorizontal && (this.css(bannerWrapper, "top", `${(curPos + translateSpeed)}px`));
         setTimeout(go, interval);
-      }	
+      }
       else {
         this.changePosEnd();
       }
@@ -515,13 +515,13 @@ export default class Banner {
   }
   // 渐变(向下兼容)
   changeOpacity(curIndex) {
-    let items = this.items;
-    let itemsLen = this.getItemsLength();
-    let endOpacity = this.ieVersion <= 8 ? 100 : 1;
+    const items = this.items;
+    const itemsLen = this.getItemsLength();
+    const endOpacity = this.ieVersion <= 8 ? 100 : 1;
     curIndex = this.loop ? curIndex + 1 : curIndex;
     let curOpacity = this.ieVersion <= 8 ? Number(items[curIndex].style.filter.replace(/[^0-9]/ig, "")) : Number(items[curIndex].style.opacity);
-    let offsetOpacity = endOpacity - curOpacity;
-    let opacitySpeed = offsetOpacity / (this.speed / 100);
+    const offsetOpacity = endOpacity - curOpacity;
+    const opacitySpeed = offsetOpacity / (this.speed / 100);
 
     for(let i = 0; i < itemsLen; i++) {
       this.css(items[i], "opacity", "0");
@@ -534,7 +534,7 @@ export default class Banner {
       return;
     }
     if(offsetOpacity === 0) return;
-    let goOpacity = () => {
+    const goOpacity = () => {
       this.animated = true;
       curOpacity = this.ieVersion <= 8 ? Number(items[curIndex].style.filter.replace(/[^0-9]/ig, "")) : Number(items[curIndex].style.opacity);
       if(curOpacity < endOpacity) {
@@ -551,9 +551,9 @@ export default class Banner {
   // 移动结束后处理
   translateEnd() {
     let translateDistance = 0;
-    let itemsLen = this.getItemsLength();
-    let bannerWrapper = this.bannerWrapper;
-    let translateOffset = this.loop ? (this.itemSize + this.itemSpacing) : 0;
+    const itemsLen = this.getItemsLength();
+    const bannerWrapper = this.bannerWrapper;
+    const translateOffset = this.loop ? (this.itemSize + this.itemSpacing) : 0;
 
     this.on(bannerWrapper, "transitionend webkitTransitionEnd mozTransitionEnd oTransitionEnd", () => {
       this.offset = 0;
@@ -564,7 +564,7 @@ export default class Banner {
           this.curIndex = 0;
           translateDistance = (this.itemSize + this.itemSpacing) * this.curIndex + translateOffset;
           if(this.isHorizontal) {
-            this.css(bannerWrapper, "transform", `translate3d(-${translateDistance}px, 0, 0)`);					
+            this.css(bannerWrapper, "transform", `translate3d(-${translateDistance}px, 0, 0)`);
           }
           else {
             this.css(bannerWrapper, "transform", `translate3d(0, -${translateDistance}px, 0)`);
@@ -579,15 +579,15 @@ export default class Banner {
           else {
             this.css(bannerWrapper, "transform", `translate3d(0, -${translateDistance}px, 0)`);
           }
-        }	
+        }
       }
     });
   }
   // 渐变结束后处理
   gradientEnd() {
-    let items = this.items;
-    let itemsLen = this.getItemsLength();
-    let curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
+    const items = this.items;
+    const itemsLen = this.getItemsLength();
+    const curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
 
     this.on(items[curIndex], "transitionend webkitTransitionEnd mozTransitionEnd oTransitionEnd", () => {
       this.animated = false;
@@ -609,10 +609,10 @@ export default class Banner {
   }
   // 旋转结束后处理
   rotateEnd() {
-    let items = this.items;
+    const items = this.items;
     let itemsLen = this.getItemsLength();
-    let bannerWrapper = this.bannerWrapper;
-    let rotateOffset = this.loop ? 90 : 0;
+    const bannerWrapper = this.bannerWrapper;
+    const rotateOffset = this.loop ? 90 : 0;
 
     this.on(bannerWrapper, "transitionend webkitTransitionEnd mozTransitionEnd oTransitionEnd", () => {
       this.animated = false;
@@ -620,7 +620,7 @@ export default class Banner {
       this.css(bannerWrapper, "transitionDuration", "0ms");
       for(let i = 0; i < itemsLen; i++) {
         this.css(items[i], "visibility", "hidden");
-      }	
+      }
       if(this.loop) {
         itemsLen = this.items.length;
         if(this.curIndex === itemsLen - 2) {
@@ -654,10 +654,10 @@ export default class Banner {
   }
   // 移动结束后处理(向下兼容)
   changePosEnd() {
-    let itemsLen = this.getItemsLength();
-    let isHorizontal = this.isHorizontal;
-    let bannerWrapper = this.bannerWrapper;
-    let curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
+    const itemsLen = this.getItemsLength();
+    const isHorizontal = this.isHorizontal;
+    const bannerWrapper = this.bannerWrapper;
+    const curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
     let endPos = -1 * curIndex * (this.itemSize + this.itemSpacing);
 
     isHorizontal && (this.css(bannerWrapper, "left", `${endPos}px`));
@@ -681,9 +681,9 @@ export default class Banner {
   }
   // 渐变结束后处理(向下兼容)
   changeOpacityEnd() {
-    let items = this.items;
-    let itemsLen = this.getItemsLength();
-    let curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
+    const items = this.items;
+    const itemsLen = this.getItemsLength();
+    const curIndex = this.loop ? this.curIndex + 1 : this.curIndex;
 
     this.css(items[curIndex], "opacity", 1);
     (this.ieVersion <= 8) && this.css(items[curIndex], "filter", "alpha(opacity=100)");
@@ -707,18 +707,18 @@ export default class Banner {
     const itemsLen = this.getItemsLength();
 
     if(this.animated) return;
-    this.curIndex++;	
+    this.curIndex++;
     if(!this.loop && this.curIndex > itemsLen - 1) {
       this.curIndex = 0;
     }
-    this.play(this.curIndex);		
+    this.play(this.curIndex);
   }
   // 上一张
   prev() {
     const itemsLen = this.getItemsLength();
 
     if(this.animated) return;
-    this.curIndex--;			
+    this.curIndex--;
     if(!this.loop && this.curIndex < 0) {
       this.curIndex = itemsLen - 1;
     }
@@ -726,7 +726,7 @@ export default class Banner {
   }
   // 自动播放
   autoplay() {
-    let interval = (typeof this.opts.interval === "number" && this.opts.interval > 0) ? parseInt(this.opts.interval) : 3000;
+    const interval = (typeof this.opts.interval === "number" && this.opts.interval > 0) ? parseInt(this.opts.interval) : 3000;
 
     this.timer = setInterval(() => {
       this.next();
@@ -735,9 +735,9 @@ export default class Banner {
   // 添加分页圆点
   pagination() {
     let paginationInitialClass = "banner-pagination-bullet";
-    let itemsLen = this.loop ? this.getItemsLength() - 2 : this.getItemsLength();
-    let paginationClass = (typeof this.opts.paginationClass === "string") ? this.opts.paginationClass : "";
-    let paginationClickable = (typeof this.opts.paginationClickable === "boolean") ? this.opts.paginationClickable : true;
+    const itemsLen = this.loop ? this.getItemsLength() - 2 : this.getItemsLength();
+    const paginationClass = (typeof this.opts.paginationClass === "string") ? this.opts.paginationClass : "";
+    const paginationClickable = (typeof this.opts.paginationClickable === "boolean") ? this.opts.paginationClickable : true;
 
     this.paginationDom = this.createDom("div");
     this.paginationDom.className = "banner-pagination";
@@ -761,7 +761,7 @@ export default class Banner {
     }
     else {
       if(!this.isFlex) {
-        let paginationDomWidth = this.paginationDom.offsetWidth;
+        const paginationDomWidth = this.paginationDom.offsetWidth;
         this.css(this.paginationDom, "margin-top", `-${paginationDomWidth / 2}px`);
       }
     }
@@ -769,11 +769,10 @@ export default class Banner {
   // 设置分页
   setPagination(curIndex) {
     let paginationInitialActiveClass = "banner-pagination-bullet-active";
-    let bullets = this.opts.pagination ? this.paginationDom.childNodes : null;
-    let itemsLen = this.loop ? this.getItemsLength() - 2 : this.getItemsLength();
-    let paginationClass = (this.opts.pagination && typeof this.opts.paginationClass === "string") ? this.opts.paginationClass : "";
-    let paginationActiveClass = (this.opts.pagination && typeof this.opts.paginationActiveClass === "string") ? this.opts.paginationActiveClass : "";
-    
+    const bullets = this.opts.pagination ? this.paginationDom.childNodes : null;
+    const itemsLen = this.loop ? this.getItemsLength() - 2 : this.getItemsLength();
+    const paginationActiveClass = (this.opts.pagination && typeof this.opts.paginationActiveClass === "string") ? this.opts.paginationActiveClass : "";
+
     if(!this.opts.pagination) return;
     if(paginationActiveClass !== "") {
       paginationInitialActiveClass = paginationInitialActiveClass + " " + paginationActiveClass;
@@ -787,13 +786,13 @@ export default class Banner {
     else if(this.loop && curIndex === itemsLen) {
       curIndex = 0;
     }
-    this.dealClass(bullets[curIndex], paginationInitialActiveClass, "addClass");		
+    this.dealClass(bullets[curIndex], paginationInitialActiveClass, "addClass");
   }
   // 添加分页事件
   addPaginationEvent() {
     let index = 0;
     let targetDom = null;
-    let bullets = this.paginationDom.childNodes;
+    const bullets = this.paginationDom.childNodes;
 
     this.on(this.paginationDom, this.eventType, evt => {
       evt = evt || window.event;
@@ -814,8 +813,8 @@ export default class Banner {
   }
   // 初始化事件
   initEvent() {
-    let keyboard = (typeof this.opts.keyboard === "boolean") ? this.opts.keyboard : true;
-    let mousewheel = (typeof this.opts.mousewheel === "boolean") ? this.opts.mousewheel : false;
+    const keyboard = (typeof this.opts.keyboard === "boolean") ? this.opts.keyboard : true;
+    const mousewheel = (typeof this.opts.mousewheel === "boolean") ? this.opts.mousewheel : false;
 
     if(this.judgePlatform() === "pc") {
       if(keyboard) {
@@ -832,7 +831,7 @@ export default class Banner {
   bindKeyEvent() {
     this.on(document, "keydown", evt => {
       evt = evt || window.event;
-      let keycode = evt.keyCode;
+      const keycode = evt.keyCode;
       if(this.isHorizontal) {
         // ←
         if(keycode === 37) {
@@ -862,7 +861,6 @@ export default class Banner {
     }).on(this.bannerWrapper, "mouseout", () => {
       this.timer && this.autoplay();
     });
-    
   }
   // 鼠标滚轮事件
   mousewheel() {
@@ -884,8 +882,8 @@ export default class Banner {
   }
   // 添加前进后退图标
   arrow() {
-    let preletrow = this.createDom("div");
-    let nextArrow = this.createDom("div");
+    const preletrow = this.createDom("div");
+    const nextArrow = this.createDom("div");
 
     preletrow.className = "banner-prev-arrow";
     nextArrow.className = "banner-next-arrow";
@@ -941,13 +939,13 @@ export default class Banner {
   // 判断平台(pc or mobile)
   judgePlatform() {
     const userAgent = navigator.userAgent.toLowerCase();
-       const agents = ["android", "iphone", "symbianos", "windows phone", "ipad", "ipod"];
-      for(let agent of agents) {
-        if(userAgent.includes(agent)) {
-          return "mobile";
-        }
+    const agents = ["android", "iphone", "symbianos", "windows phone", "ipad", "ipod"];
+    for(const agent of agents) {
+      if(userAgent.includes(agent)) {
+        return "mobile";
       }
-      return "pc";
+    }
+    return "pc";
   }
   // 获得item的数量
   getItemsLength() {
@@ -958,11 +956,11 @@ export default class Banner {
     return document.createElement(tagName);
   }
   // 为元素绑定事件
-  on(ele, eventType, callback) {   
+  on(ele, eventType, callback) {
     const eventList = eventType.split(" ");
 
     if(typeof callback === "function") {
-      for(let event of eventList) {
+      for(const event of eventList) {
         if(document.addEventListener) {
           ele.addEventListener(event, callback);
         }
@@ -977,13 +975,13 @@ export default class Banner {
   css(...args) {
     const [ele, styles, styleValue] = args;
     let stylePrefixProp = "";
-    
+
     if(!ele) {
       throw new Error("dom not found!");
     }
     // 处理类似(ele, {position: "absolue", width: "100px"})的情况
     if(styles && typeof styles === "object") {
-      for(let styleProp in styles) {
+      for(const styleProp in styles) {
         stylePrefixProp = this.prefix(styleProp);
         ele.style[stylePrefixProp] = styles[styleProp];
       }
@@ -1002,7 +1000,7 @@ export default class Banner {
 
     let eleClass = ele.className;
     const classList = classStrs.split(" ");
-    for(let className of classList) {
+    for(const className of classList) {
       if(type === "addClass") {
         if(!eleClass.includes(className)) {
           eleClass += " " + className;
@@ -1010,7 +1008,7 @@ export default class Banner {
       }
       else {
         if(eleClass.includes(className)) {
-          let reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+          const reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
           eleClass = eleClass.replace(reg, "");
         }
       }
@@ -1021,18 +1019,18 @@ export default class Banner {
   // 返回适合当前浏览器版本的css属性，否则返回false
   prefix(prop) {
     const style = this.createDom("dummy").style;
-      const prefixes = ["webkit", "moz", "o", "ms"];
-      let prefixeProp = "";
+    const prefixes = ["webkit", "moz", "o", "ms"];
+    let prefixeProp = "";
 
-      if(style[prop] !== undefined) return prop;
-      
+    if(style[prop] !== undefined) return prop;
+
     prop = prop.charAt(0).toUpperCase() + prop.substr(1);
-    for(let prefix of prefixes) {
+    for(const prefix of prefixes) {
       prefixeProp = prefix + prop;
       if(style[prefixeProp] !== undefined) {
-          return prefixeProp;
-        }
+        return prefixeProp;
+      }
     }
-    return false;		    	
+    return false;
   }
 }
