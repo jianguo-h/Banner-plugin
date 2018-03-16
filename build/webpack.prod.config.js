@@ -2,13 +2,13 @@ const path = require("path");
 const webpack = require("webpack");
 const webpackMerge = require("webpack-merge");
 const copyWebpackPlugin = require("copy-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackBaseConfig = require("./webpack.base.config");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 const webpackProdConfig = webpackMerge(webpackBaseConfig, {
 	devtool: false,
+	mode: 'production',
 	output: {
 		publicPath: "./"
 	},
@@ -32,12 +32,7 @@ const webpackProdConfig = webpackMerge(webpackBaseConfig, {
 		new ExtractTextPlugin({
 			filename: "css/banner.min.css"
 		}),
-		// 移动html文件
-		new HtmlWebpackPlugin({
-			template: "./index.html",
-			filename: "index.html",
-			inject: true
-		}),
+		
 		// 压缩混淆js
 		new webpack.optimize.UglifyJsPlugin({
 			compress: {
