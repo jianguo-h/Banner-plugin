@@ -2,9 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {
-    app: './src/banner.js'
-  },
+  entry: './src/banner.ts',
   output: {
     filename: 'js/banner.min.js',
     path: path.resolve(__dirname, '../dist')
@@ -12,18 +10,9 @@ module.exports = {
   module: {
     rules: [
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: [
-          path.resolve(__dirname, '../dist'),
-          path.resolve(__dirname, '../node_modules')
-        ],
-        use: ['eslint-loader']
-      },
-      {
-        test: /\.js$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: ['babel-loader']
+        use: ['ts-loader']
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -40,7 +29,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.json']
+    extensions: ['.js', '.ts']
   },
   plugins: [
     // 移动html文件
