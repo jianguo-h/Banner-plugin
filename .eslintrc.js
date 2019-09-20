@@ -19,6 +19,9 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': ['error', {
       allowExpressions: true
     }],
-    '@typescript-eslint/interface-name-prefix': 'off'
+    '@typescript-eslint/interface-name-prefix': 'off',
+    '@typescript-eslint/no-inferrable-types': ['error', {
+      ignoreParameters: true
+    }]
   }
 }

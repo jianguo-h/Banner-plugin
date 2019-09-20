@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/18720984231/Banner-plugin.git"
   },
-  "author": "",
+  "author": "jianguo",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.0",

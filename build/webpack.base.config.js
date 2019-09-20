@@ -34,9 +34,9 @@ module.exports = {
   plugins: [
     // 移动html文件
     new HtmlWebpackPlugin({
-      template: "./index.html",
+      template: "./src/index.html",
       filename: "index.html",
       inject: true
     })
   ]
-}
+};
